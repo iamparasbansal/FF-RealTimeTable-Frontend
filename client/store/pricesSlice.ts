@@ -21,8 +21,8 @@ const initialState: PricesState = {
 };
 
 export const fetchPrices = createAsyncThunk('prices/fetchPrices', async (coinId: string) => {
-  const response = await axios.get(`https://realtime-coin-data-backend.onrender.com/price/${coinId}?count=20`);
-  return response.data.data;
+  const response = await axios.get(`https://realtimepricedatabackend-2.onrender.com/price/${coinId}?count=20`);
+  return response.data;
 });
 
 const pricesSlice = createSlice({

@@ -12,32 +12,39 @@ interface CoinData {
 
 // Define a map to store coinId and symbol
 const symbolToCoinIdMap: { [key: string]: string } = {};
+const symbolsArray: string[] = [];
 
-useEffect(() => {
-  const fetchSymbols = async () => {
-      try {
-          const response = await fetch('https://realtime-coin-data-backend.onrender.com/coin');
-          if (!response.ok) {
-              throw new Error('Failed to fetch');
-          }
-          const data: CoinData[] = await response.json();
-          // Populate the map with coinId as key and symbol as value
-          data.forEach(coin => {
-            symbolToCoinIdMap[coin.symbol] = coin.coinId;
-          });
-          
-          // Log to check if the map is populated correctly
-          console.log(symbolToCoinIdMap);
-      } catch (error) {
-          console.error('Error fetching data:', error);
-      }
-  };
-
-  fetchSymbols();
-}, []); // Empty dependency array means this effect runs only once
+symbolsArray.push("zoc");
+symbolsArray.push("zcn");
+symbolToCoinIdMap["zoc"] = "01coin";
+symbolToCoinIdMap["zoc"] = "0chain";
 
 const SymbolSelector: React.FC = () => {
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   const fetchSymbols = async () => {
+  //       try {
+  //           const response = await fetch('https://realtimepricedatabackend-2.onrender.com/coin');
+  //           if (!response.ok) {
+  //               throw new Error('Failed to fetch');
+  //           }
+  //           const data: CoinData[] = await response.json();
+  //           // Populate the map with coinId as key and symbol as value
+  //           data.forEach(coin => {
+  //             symbolsArray.push(coin.symbol);
+  //             symbolToCoinIdMap[coin.symbol] = coin.coinId;
+  //           });
+
+  //           // Log to check if the map is populated correctly
+  //           console.log(symbolsArray);
+  //       } catch (error) {
+  //           console.error('Error fetching data:', error);
+  //       }
+  //   };
+  
+  //   fetchSymbols();
+  // }, []); // Empty dependency array means this effect runs only once
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(setSymbol(event.target.value));
@@ -46,7 +53,7 @@ const SymbolSelector: React.FC = () => {
 
   return (
     <select className="symbol-selector" onChange={handleChange}>
-      {Object.entries(symbolToCoinIdMap).map(([symbol, coinId]) => (
+      {symbolsArray.map((symbol) => (
         <option key={symbol} value={symbol}>
           {symbol}
         </option>
