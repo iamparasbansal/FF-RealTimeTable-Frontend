@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSymbol } from '../store/symbolSlice';
-import { setCoinId } from '../store/coinIdSlice';
+import { setCoinId, setSymbol } from '../store/coinSlice';
 
 // Define an interface for the API response object
 interface CoinData {

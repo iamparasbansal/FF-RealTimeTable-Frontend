@@ -5,8 +5,8 @@ import { fetchPrices } from '../store/pricesSlice';
 
 const PriceTable: React.FC = () => {
   const dispatch = useAppDispatch();
-  const coinId = useSelector((state: RootState) => state.coinId);
-  const symbol = useSelector((state: RootState) => state.symbol);
+  const coinId = useSelector((state: RootState) => state.coin.coinId);
+  const symbol = useSelector((state: RootState) => state.coin.symbol);
   const { prices, status, error } = useSelector((state: RootState) => state.prices);
 
   useEffect(() => {
