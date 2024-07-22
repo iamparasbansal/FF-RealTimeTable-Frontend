@@ -6,6 +6,7 @@ import { fetchPrices } from '../store/pricesSlice';
 const PriceTable: React.FC = () => {
   const dispatch = useAppDispatch();
   const coinId = useSelector((state: RootState) => state.coinId);
+  const symbol = useSelector((state: RootState) => state.symbol);
   const { prices, status, error } = useSelector((state: RootState) => state.prices);
 
   useEffect(() => {
@@ -36,6 +37,7 @@ const PriceTable: React.FC = () => {
       <tbody>
         {prices.map((price) => (
           <tr key={price.timestamp}>
+            <td>{symbol}</td>
             <td>{price.price}</td>
             <td>{new Date(price.timestamp).toLocaleString()}</td>
           </tr>

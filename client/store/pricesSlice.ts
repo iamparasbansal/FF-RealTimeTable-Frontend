@@ -28,7 +28,7 @@ export const fetchPrices = createAsyncThunk('prices/fetchPrices', async (coinId:
 const pricesSlice = createSlice({
   name: 'prices',
   initialState,
-  reducers: {},
+  reducers: {}, 
   extraReducers: (builder) => {
     builder
       .addCase(fetchPrices.pending, (state) => {

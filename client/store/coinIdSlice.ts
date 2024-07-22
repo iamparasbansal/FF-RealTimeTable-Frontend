@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 const initialState = '0chain';
 
 const coinIdSlice = createSlice({
-  name: 'coin',
+  name: 'coinId',
   initialState,
   reducers: {
     setCoinId: (state, action: PayloadAction<string>) => action.payload,

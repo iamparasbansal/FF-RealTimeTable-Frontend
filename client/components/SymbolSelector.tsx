@@ -14,10 +14,10 @@ interface CoinData {
 const symbolToCoinIdMap: { [key: string]: string } = {};
 const symbolsArray: string[] = [];
 
-symbolsArray.push("zoc");
 symbolsArray.push("zcn");
+symbolsArray.push("zoc");
 symbolToCoinIdMap["zoc"] = "01coin";
-symbolToCoinIdMap["zoc"] = "0chain";
+symbolToCoinIdMap["zcn"] = "0chain";
 
 const SymbolSelector: React.FC = () => {
   const dispatch = useDispatch();
