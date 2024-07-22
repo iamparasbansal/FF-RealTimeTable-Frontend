@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = 'ZOC';
+const initialState = 'ZCN';
 
 const symbolSlice = createSlice({
   name: 'symbol',
