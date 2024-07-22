@@ -1,1 +1,1 @@
-# RealTimeTable-NextJS-Redux-TS
+# FF-RealTimeTable-Frontend
