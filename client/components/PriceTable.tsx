@@ -1,19 +1,21 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../store';
-import { fetchPrices } from '../store/pricesSlice';
+import { fetchPrices } from '../store/pricesAndCoinsSlice';
 
 const PriceTable: React.FC = () => {
   const dispatch = useAppDispatch();
-  const coinId = useSelector((state: RootState) => state.coin.coinId);
-  const symbol = useSelector((state: RootState) => state.coin.symbol);
-  const { prices, status, error } = useSelector((state: RootState) => state.prices);
+  const coinId = useSelector((state: RootState) => state.selectedCoin.coinId);
+  const symbol = useSelector((state: RootState) => state.selectedCoin.symbol);
+  const { prices, status, error } = useSelector((state: RootState) => state.pricesAndCoins.pricesOfSelectedCoin);
 
   useEffect(() => {
+    console.log("coinId", coinId);
     dispatch(fetchPrices(coinId));
     const interval = setInterval(() => {
       dispatch(fetchPrices(coinId));
-    }, 30000);
+    }, 60000);
+    console.log("prices", prices);
     return () => clearInterval(interval);
   }, [dispatch, coinId]);
 

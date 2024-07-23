@@ -6,8 +6,8 @@ interface Coin {
 }
 
 const initialState: Coin = {
-  coinId: '0chain',
-  symbol: 'zcn',
+  coinId: '01coin',
+  symbol: 'zoc',
 };
 
 const coinSlice = createSlice({

@@ -1,8 +1,7 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
+import SymbolSelector from '../components/SymbolSelector';
 import PriceTable from '../components/PriceTable';
-
-const SymbolSelector = dynamic(() => import('../components/SymbolSelector'), { ssr: false });
 
 const Home: React.FC = () => {
   return (

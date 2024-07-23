@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import coinReducer from './coinSlice';
-import pricesReducer from './pricesSlice';
+import pricesAndCoinsReducer from './pricesAndCoinsSlice';
 
 const store = configureStore({
   reducer: {
-    coin: coinReducer,
-    prices: pricesReducer,
+    selectedCoin: coinReducer,
+    pricesAndCoins: pricesAndCoinsReducer,
   },
 });
 

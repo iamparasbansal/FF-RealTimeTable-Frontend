@@ -1,62 +1,59 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCoinId, setSymbol } from '../store/coinSlice';
-
-// Define an interface for the API response object
-interface CoinData {
-  coinId: string;
-  symbol: string;
-  name: string;
-}
-
-// Define a map to store coinId and symbol
-const symbolToCoinIdMap: { [key: string]: string } = {};
-const symbolsArray: string[] = [];
-
-symbolsArray.push("zcn");
-symbolsArray.push("zoc");
-symbolToCoinIdMap["zoc"] = "01coin";
-symbolToCoinIdMap["zcn"] = "0chain";
+import { RootState, useAppDispatch } from '../store';
+import { fetchCoins } from '../store/pricesAndCoinsSlice';
 
 const SymbolSelector: React.FC = () => {
-  const dispatch = useDispatch();
+  const myDispatch = useAppDispatch();
+  const { coins, status, error } = useSelector((state: RootState) => state.pricesAndCoins.allCoins);
 
-  // useEffect(() => {
-  //   const fetchSymbols = async () => {
-  //       try {
-  //           const response = await fetch('https://realtimepricedatabackend-2.onrender.com/coin');
-  //           if (!response.ok) {
-  //               throw new Error('Failed to fetch');
-  //           }
-  //           const data: CoinData[] = await response.json();
-  //           // Populate the map with coinId as key and symbol as value
-  //           data.forEach(coin => {
-  //             symbolsArray.push(coin.symbol);
-  //             symbolToCoinIdMap[coin.symbol] = coin.coinId;
-  //           });
+  // Create memoized values for symbols and map
+  const { symbolsArray, symbolToCoinIdMap } = useMemo(() => {
+    const map: { [key: string]: string } = {};
+    const symbols: string[] = [];
 
-  //           // Log to check if the map is populated correctly
-  //           console.log(symbolsArray);
-  //       } catch (error) {
-  //           console.error('Error fetching data:', error);
-  //       }
-  //   };
-  
-  //   fetchSymbols();
-  // }, []); // Empty dependency array means this effect runs only once
+    coins.forEach((coin: { symbol: string; coinId: string }) => {
+      symbols.push(coin.symbol);
+      map[coin.symbol] = coin.coinId;
+    });
+
+    return { symbolsArray: symbols, symbolToCoinIdMap: map };
+  }, [coins]);
+
+  useEffect(() => {
+    console.log("Dispatching fetchCoins");
+    myDispatch(fetchCoins());
+  }, [myDispatch]);
+
+  if (status === 'loading') {
+    return <p>Loading...</p>;
+  }
+
+  if (status === 'failed') {
+    return <p>{error}</p>;
+  }
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setSymbol(event.target.value));
-    dispatch(setCoinId(symbolToCoinIdMap[event.target.value]));
+    const selectedSymbol = event.target.value;
+    console.log("event.target.value", selectedSymbol);
+    console.log("Map Value", symbolToCoinIdMap[selectedSymbol]);
+    myDispatch(setSymbol(selectedSymbol));
+    myDispatch(setCoinId(symbolToCoinIdMap[selectedSymbol]));
   };
 
+  // Render the select element only if coins data is available
   return (
     <select className="symbol-selector" onChange={handleChange}>
-      {symbolsArray.map((symbol) => (
-        <option key={symbol} value={symbol}>
-          {symbol}
-        </option>
-      ))}
+      {symbolsArray.length > 0 ? (
+        symbolsArray.map((symbol) => (
+          <option key={symbol} value={symbol}>
+            {symbol}
+          </option>
+        ))
+      ) : (
+        <option value="">No symbols available</option>
+      )}
     </select>
   );
 };
