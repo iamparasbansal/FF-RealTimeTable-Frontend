@@ -12,9 +12,11 @@ const PriceTable: React.FC = () => {
   useEffect(() => {
     console.log("coinId", coinId);
     dispatch(fetchPrices(coinId));
+    // Here you can set the wait time before next refresh
+    // Currently its 30000 ms or 30 seconds
     const interval = setInterval(() => {
       dispatch(fetchPrices(coinId));
-    }, 60000);
+    }, 30000);
     console.log("prices", prices);
     return () => clearInterval(interval);
   }, [dispatch, coinId]);
